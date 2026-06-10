@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Banfrut - Deliciosos Snacks</title>
+    <style>
+        body { font-family: sans-serif; background-color: #FFF9E6; color: #333; margin: 0; padding: 20px; }
+        header { background-color: #FF9800; color: white; text-align: center; padding: 20px; border-radius: 10px; }
+        .logo { width: 150px; cursor: pointer; }
+        .container { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+        .sidebar { flex: 1; min-width: 200px; text-align: center; }
+        .main-content { flex: 3; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .order-box { background-color: #FFEB3B; padding: 20px; border-radius: 10px; margin-top: 20px; }
+        footer { margin-top: 30px; text-align: center; }
+        #coupon-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                         background: #FF9800; color: white; padding: 40px; border-radius: 20px; border: 5px solid #FFEB3B; text-align: center; }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="C:\Users\gutie\Downloads\LOGOTIPO.JPG" alt="Banfrut" class="logo" ondblclick="showCoupon()">
+    <H1>BANFRUT</H1>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+        <img src="C:\Users\gutie\Downloads\VASOS.JPG" style="width:100%; border-radius:10px;">
+        <img src="C:\Users\gutie\Downloads\BANDERILLAS.JPG" style="width:100%; border-radius:10px; margin-top:10px;">
+<img src="C:\Users\gutie\Downloads\IA.PNG" style="width:100%; border-radius:10px; margin-top:10px;">
+    </div>
+
+    <main class="main-content">
+        
+    
+<div style="background-color: PINK; padding: 20px;">
+<H1>. <nav><a href="HISTORIA.HTML">HISTORIA</a></nav></H1>
+</div>
+<HR>
+
+<div style="background-color: red; padding: 20px;">
+<H1>. <nav><a href="QUIENES SOMOS.HTML">¿QUIENES SOMOS?</a></nav></H1>
+</div>
+<HR>
+     <div style="background-color: GREEN; padding: 20px;">
+<H1>. <nav><a href="MISION Y VISION.HTML">MISION Y VISION</a></nav></H1>
+</div>
+<HR>
+<div style="background-color: YELLOW; padding: 20px;">
+<H1>. <nav><a href="BENEFICIOS.HTML">BENEFICIOS</a></nav></H1>
+</div>
+<HR>
+
+<div style="background-color: GOLD; padding: 20px;">
+<H1>. <nav><a href="MENU.HTML">MENU</a></nav></H1>
+</div>
+<HR>
+
+        <section class="order-box">
+            <h2>. Haz tu pedido por WhatsApp</h2>
+            <form id="pedidoForm">
+                <label>Producto:</label>
+                <select id="tipoProducto" onchange="mostrarOpciones()">
+                    <option value="">Selecciona un producto</option>
+                    <option value="banderilla">Banderilla ($15 c/u, 2 por $25)</option>
+                    <option value="vaso">Vaso con fruta ($50)</option>
+                </select>
+                <div id="opciones" style="margin-top:10px;"></div>
+                <button type="button" onclick="enviarWhatsApp()" style="margin-top:15px; padding:10px; background:#FF9800; border:none; color:white; cursor:pointer;">
+                    Enviar Pedido al 2293045544
+                </button>
+            </form>
+        </section>
+    </main>
+</div>
+
+<footer>
+    <p>. Síguenos:</p>
+    <a href="https://www.tiktok.com/@ban_frutt?_r=1&_t=ZS-973J88cngKy">TikTok</a> | 
+    <a href="https://www.instagram.com/banderillas_preparadas?igsh=ZGxmczcycmo4bWhl">Instagram</a>
+</footer>
+
+<div id="coupon-modal">
+    <h2>¡Felicidades!</h2>
+    <p>Ganaste un cupón del 10% de descuento. Tómale captura y mándalo con tu pedido.</p>
+    <button onclick="document.getElementById('coupon-modal').style.display='none'">Cerrar</button>
+</div>
+
+<script>
+    function showCoupon() { document.getElementById('coupon-modal').style.display = 'block'; }
+    
+    function mostrarOpciones() {
+        let tipo = document.getElementById('tipoProducto').value;
+        let div = document.getElementById('opciones');
+        if(tipo == 'banderilla') {
+            div.innerHTML = 'Cantidad: <input type="number" id="cant" min="1" value="1"><br>Relleno: <select id="relleno"><option>Salchicha</option><option>Queso</option></select><br>Aderezo: <select id="aderezo"><option>Catsup</option><option>Aderezo</option></select>';
+        } else if(tipo == 'vaso') {
+            div.innerHTML = 'Cantidad: <input type="number" id="cant" min="1" value="1"><br>Frutas: <br><input type="checkbox" value="Piña">Piña <input type="checkbox" value="Jícama">Jícama <input type="checkbox" value="Mango">Mango <input type="checkbox" value="Pepino">Pepino <input type="checkbox" value="Sandía">Sandía';
+        } else {
+            div.innerHTML = '';
+        }
+    }
+
+    function enviarWhatsApp() {
+        let tipo = document.getElementById('tipoProducto').value;
+        if (!tipo) {
+            alert("Por favor selecciona un producto primero.");
+            return;
+        }
+
+        let cantidad = document.getElementById('cant').value;
+        let mensaje = "Hola, me gustaría pedir: " + cantidad + " " + tipo;
+
+        if (tipo === 'banderilla') {
+            let relleno = document.getElementById('relleno').value;
+            let aderezo = document.getElementById('aderezo').value;
+            mensaje += " de " + relleno + " con " + aderezo + ".";
+        } else if (tipo === 'vaso') {
+            let frutas = [];
+            let checkboxes = document.querySelectorAll('#opciones input[type="checkbox"]:checked');
+            checkboxes.forEach((cb) => { frutas.push(cb.value); });
+            mensaje += " con: " + (frutas.length > 0 ? frutas.join(", ") : "todas las frutas") + ".";
+        }
+
+        // Codificar mensaje para URL y abrir en nueva pestaña
+        let url = "https://wa.me/522293045544?text=" + encodeURIComponent(mensaje);
+        window.open(url, '_blank');
+    }
+</script>
+</body>
+</html>
